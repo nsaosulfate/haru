@@ -73,6 +73,7 @@ button,.r-item,.tab,.cal-cell{ touch-action:manipulation; -webkit-user-select:no
 .btn-row{ display:flex; gap:10px; } .btn-row .btn{ flex:1; }
 .icon-btn{ background:var(--card); color:var(--sub); cursor:pointer; width:40px; height:40px; border-radius:12px; font-size:17px; border:1px solid var(--line); flex:0 0 auto; }
 .moa-btn{ display:inline-flex; align-items:center; justify-content:center; text-decoration:none; color:var(--brand); font-weight:700; }
+.lang-btn{ font-size:13px; font-weight:800; letter-spacing:.02em; color:var(--ink); }
 .panel{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:14px; box-shadow:var(--shadow); }
 .panel-title{ font-size:14px; font-weight:800; margin-bottom:12px; }
 .empty-msg{ text-align:center; color:var(--sub); font-size:14px; padding:30px 12px; line-height:1.8; }
@@ -263,34 +264,35 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
 <div id="screen-loading">
   <div class="auth-hero" style="padding:34vh 0 0;">
     <div class="logo-mark">하</div>
-    <p style="margin-top:14px;">불러오는 중…</p>
+    <p style="margin-top:14px;" data-i18n="loading">불러오는 중…</p>
   </div>
 </div>
 
 <!-- ═════════ 로그인 ═════════ -->
 <div id="screen-auth" class="hidden">
-  <div style="display:flex; justify-content:flex-end; margin-bottom:-40px;">
+  <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:-40px;">
+    <button class="icon-btn lang-btn">EN</button>
     <button class="icon-btn theme-btn">🌙</button>
   </div>
   <div class="auth-hero">
     <div class="logo-mark">하</div>
     <h1>하루<small>Haru</small></h1>
-    <p>매일의 루틴을 한 곳에서, 가볍게 ✓</p>
+    <p data-i18n="tagline">매일의 루틴을 한 곳에서, 가볍게 ✓</p>
   </div>
   <div class="auth-box">
     <button class="btn btn-google" id="btn-google" disabled>
       <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.3 6.1 29.4 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.3 6.1 29.4 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.4-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.2 5.2C36.9 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"/></svg>
-      <span>Google로 시작하기</span>
+      <span data-i18n="googleBtn">Google로 시작하기</span>
     </button>
     <div class="auth-msg" id="auth-msg"></div>
-    <div id="setup-notice" class="setup-notice hidden">
+    <div id="setup-notice" class="setup-notice hidden" data-i18n="setupNotice">
       ⚙️ <b>아직 Firebase 설정 전이에요.</b><br>
       폴더의 <b>설정_가이드.md</b>를 따라 진행하면 Google 로그인과 클라우드 저장이 켜집니다.
       그 전에는 아래 "이 기기에서만 쓰기"로 이용할 수 있어요.
     </div>
-    <div style="text-align:center;"><button class="link-btn" id="btn-guest">로그인 없이 이 기기에서만 쓰기</button></div>
+    <div style="text-align:center;"><button class="link-btn" id="btn-guest" data-i18n="guestBtn">로그인 없이 이 기기에서만 쓰기</button></div>
   </div>
-  <p class="hint" style="text-align:center;">Google로 로그인하면 기록이 클라우드에 저장되어<br>아이폰 · PC 어디서든 이어서 쓸 수 있어요.</p>
+  <p class="hint" style="text-align:center;" data-i18n="authHint">Google로 로그인하면 기록이 클라우드에 저장되어<br>아이폰 · PC 어디서든 이어서 쓸 수 있어요.</p>
 </div>
 
 <!-- ═════════ 오늘 (루틴) ═════════ -->
@@ -298,7 +300,8 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
   <div class="appbar">
     <div class="logo"><span class="logo-mark">하</span>하루<small>Haru</small></div>
     <div style="display:flex; gap:8px; align-items:center;">
-      <a class="icon-btn moa-btn" href="https://nsaosulfate.github.io/moa/" title="모아로 돌아가기" aria-label="모아로 돌아가기">◈</a>
+      <a class="icon-btn moa-btn" href="https://nsaosulfate.github.io/moa/" data-i18n-title="moaTitle" data-i18n-aria="moaTitle" title="모아로 돌아가기" aria-label="모아로 돌아가기">◈</a>
+      <button class="icon-btn lang-btn">EN</button>
       <button class="icon-btn theme-btn">🌙</button>
     </div>
   </div>
@@ -307,7 +310,7 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
     <div class="date-lbl" id="day-label">오늘</div>
     <button class="nav-arrow" id="day-next">›</button>
   </div>
-  <button class="today-jump hidden" id="day-jump">↩ 오늘로</button>
+  <button class="today-jump hidden" id="day-jump" data-i18n="todayJump">↩ 오늘로</button>
   <div class="ring-wrap">
     <svg class="ring" viewBox="0 0 120 120">
       <circle class="ring-bg" cx="60" cy="60" r="52"/>
@@ -324,12 +327,12 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
 <!-- ═════════ 할 일 ═════════ -->
 <div id="screen-todo" class="hidden">
   <div class="appbar">
-    <div><div class="page-title">할 일</div><div class="page-sub" id="todo-sub">중요도 · 마감일로 정렬</div></div>
+    <div><div class="page-title" data-i18n="todoTitle">할 일</div><div class="page-sub" id="todo-sub">중요도 · 마감일로 정렬</div></div>
     <button class="add-btn" id="todo-add">+</button>
   </div>
   <div class="seg" id="todo-sort" style="margin:8px 0 14px;">
-    <button class="seg-btn on" data-sort="due">📅 마감순</button>
-    <button class="seg-btn" data-sort="pr">🔥 중요도순</button>
+    <button class="seg-btn on" data-sort="due" data-i18n="sortDue">📅 마감순</button>
+    <button class="seg-btn" data-sort="pr" data-i18n="sortPr">🔥 중요도순</button>
   </div>
   <div id="todo-list"></div>
 </div>
@@ -337,7 +340,7 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
 <!-- ═════════ 디데이 ═════════ -->
 <div id="screen-dday" class="hidden">
   <div class="appbar">
-    <div><div class="page-title">디데이</div><div class="page-sub">중요한 날까지 며칠 남았는지</div></div>
+    <div><div class="page-title" data-i18n="ddayTitle">디데이</div><div class="page-sub" data-i18n="ddaySub">중요한 날까지 며칠 남았는지</div></div>
     <button class="add-btn" id="dday-add">+</button>
   </div>
   <div id="dday-list"></div>
@@ -345,7 +348,7 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
 
 <!-- ═════════ 캘린더 ═════════ -->
 <div id="screen-calendar" class="hidden">
-  <div class="appbar"><div class="page-title">캘린더</div></div>
+  <div class="appbar"><div class="page-title" data-i18n="calTitle">캘린더</div></div>
   <div class="cal-head">
     <button class="nav-arrow" id="cal-prev">‹</button>
     <div class="mon" id="cal-mon">2026년 6월</div>
@@ -355,33 +358,35 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
   <div class="cal-legend"><span>0%</span><i style="background:var(--hm0)"></i><i style="background:var(--hm1)"></i><i style="background:var(--hm2)"></i><i style="background:var(--hm3)"></i><i style="background:var(--hm4)"></i><span>100%</span></div>
   <div class="stat-grid" id="cal-stats"></div>
   <div class="panel" style="margin-top:14px;">
-    <div class="panel-title">🌱 달성 잔디 (최근 17주)</div>
+    <div class="panel-title" data-i18n="grassTitle">🌱 달성 잔디 (최근 17주)</div>
     <div class="hm-wrap"><div class="hm-grid" id="hm-grid"></div></div>
-    <div class="hm-legend"><span>적음</span><span class="hm-cell"></span><span class="hm-cell l1"></span><span class="hm-cell l2"></span><span class="hm-cell l3"></span><span class="hm-cell l4"></span><span>많음</span></div>
+    <div class="hm-legend"><span data-i18n="legendLess">적음</span><span class="hm-cell"></span><span class="hm-cell l1"></span><span class="hm-cell l2"></span><span class="hm-cell l3"></span><span class="hm-cell l4"></span><span data-i18n="legendMore">많음</span></div>
   </div>
 </div>
 
 <!-- ═════════ 설정 ═════════ -->
 <div id="screen-settings" class="hidden">
-  <div class="appbar"><div class="page-title">설정</div></div>
+  <div class="appbar"><div class="page-title" data-i18n="setTitle">설정</div></div>
   <div class="profile">
     <div class="avatar" id="set-avatar"></div>
     <div><div class="p-nick" id="set-nick"></div><div class="p-mail" id="set-mail"></div></div>
   </div>
 
-  <div class="section-label">루틴 항목</div>
+  <div class="section-label" data-i18n="secRoutine">루틴 항목</div>
   <div id="routine-edit"></div>
-  <button class="btn btn-ghost" id="add-routine" style="margin-top:4px;">＋ 루틴 항목 추가</button>
+  <button class="btn btn-ghost" id="add-routine" style="margin-top:4px;" data-i18n="addRoutine">＋ 루틴 항목 추가</button>
 
-  <div class="section-label">앱 설정</div>
-  <label class="switch-row"><span><span class="name">🌙 다크 모드</span><div class="desc">어두운 곳에서 눈이 편한 테마</div></span>
+  <div class="section-label" data-i18n="secApp">앱 설정</div>
+  <label class="switch-row"><span><span class="name" data-i18n="langName">🌐 English mode</span><div class="desc" data-i18n="langDesc">끄면 한국어로 표시</div></span>
+    <span class="switch"><input type="checkbox" id="set-lang"><span class="slider"></span></span></label>
+  <label class="switch-row"><span><span class="name" data-i18n="darkName">🌙 다크 모드</span><div class="desc" data-i18n="darkDesc">어두운 곳에서 눈이 편한 테마</div></span>
     <span class="switch"><input type="checkbox" id="set-dark"><span class="slider"></span></span></label>
 
-  <div class="section-label">데이터</div>
-  <button class="btn btn-ghost" id="btn-export" style="margin-top:0;">⬇ 데이터 내보내기 (백업)</button>
-  <button class="btn btn-ghost" id="btn-reset" style="border-color:var(--red); color:var(--red);">기록 초기화</button>
-  <button class="btn btn-ghost hidden" id="btn-login2">Google로 로그인 (클라우드 저장)</button>
-  <button class="btn btn-ghost hidden" id="btn-logout" style="border-color:var(--red); color:var(--red);">로그아웃</button>
+  <div class="section-label" data-i18n="secData">데이터</div>
+  <button class="btn btn-ghost" id="btn-export" style="margin-top:0;" data-i18n="exportBtn">⬇ 데이터 내보내기 (백업)</button>
+  <button class="btn btn-ghost" id="btn-reset" style="border-color:var(--red); color:var(--red);" data-i18n="resetBtn">기록 초기화</button>
+  <button class="btn btn-ghost hidden" id="btn-login2" data-i18n="login2Btn">Google로 로그인 (클라우드 저장)</button>
+  <button class="btn btn-ghost hidden" id="btn-logout" style="border-color:var(--red); color:var(--red);" data-i18n="logoutBtn">로그아웃</button>
   <p class="hint" style="text-align:center; margin-top:14px;">하루 · Haru</p>
 </div>
 
@@ -390,11 +395,11 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
 <!-- ═════════ 하단 탭바 ═════════ -->
 <nav class="tabbar hidden" id="tabbar">
   <div class="tabbar-inner">
-    <button class="tab on" data-tab="today"><span class="ic">✓</span>오늘</button>
-    <button class="tab" data-tab="todo"><span class="ic">📋</span>할 일</button>
-    <button class="tab" data-tab="dday"><span class="ic">📌</span>디데이</button>
-    <button class="tab" data-tab="calendar"><span class="ic">📅</span>캘린더</button>
-    <button class="tab" data-tab="settings"><span class="ic">⚙️</span>설정</button>
+    <button class="tab on" data-tab="today"><span class="ic">✓</span><span data-i18n="tabToday">오늘</span></button>
+    <button class="tab" data-tab="todo"><span class="ic">📋</span><span data-i18n="tabTodo">할 일</span></button>
+    <button class="tab" data-tab="dday"><span class="ic">📌</span><span data-i18n="tabDday">디데이</span></button>
+    <button class="tab" data-tab="calendar"><span class="ic">📅</span><span data-i18n="tabCal">캘린더</span></button>
+    <button class="tab" data-tab="settings"><span class="ic">⚙️</span><span data-i18n="tabSet">설정</span></button>
   </div>
 </nav>
 
@@ -461,6 +466,126 @@ const uid7 = () => Date.now().toString(36) + Math.random().toString(36).slice(2,
 const DOW = ["일","월","화","수","목","금","토"];
 const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const clone = o => JSON.parse(JSON.stringify(o));
+const DOW_EN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+/* ═════════ 다국어 (한국어 / English) ═════════ */
+const LS_LANG = "haru-lang";
+let L = (localStorage.getItem(LS_LANG) === "en" || localStorage.getItem(LS_LANG) === "ko")
+        ? localStorage.getItem(LS_LANG)
+        : (navigator.language && navigator.language.toLowerCase().startsWith("ko") ? "ko" : "en");
+const T = {
+  ko: {
+    loading:"불러오는 중…",
+    tagline:"매일의 루틴을 한 곳에서, 가볍게 ✓",
+    googleBtn:"Google로 시작하기", guestBtn:"로그인 없이 이 기기에서만 쓰기",
+    authHint:"Google로 로그인하면 기록이 클라우드에 저장되어<br>아이폰 · PC 어디서든 이어서 쓸 수 있어요.",
+    setupNotice:"⚙️ <b>아직 Firebase 설정 전이에요.</b><br>폴더의 <b>설정_가이드.md</b>를 따라 진행하면 Google 로그인과 클라우드 저장이 켜집니다. 그 전에는 아래 \"이 기기에서만 쓰기\"로 이용할 수 있어요.",
+    moaTitle:"모아로 돌아가기", toDark:"다크 모드로 전환", toLight:"라이트 모드로 전환",
+    todayJump:"↩ 오늘로", today:"오늘", ringCap:"완료",
+    tabToday:"오늘", tabTodo:"할 일", tabDday:"디데이", tabCal:"캘린더", tabSet:"설정",
+    todoTitle:"할 일", sortDue:"📅 마감순", sortPr:"🔥 중요도순",
+    todoEmpty:"아직 할 일이 없어요 📋<br>오른쪽 위 ＋ 로 추가해 보세요.",
+    grpNone:"그룹 없음", grpEmpty:"아직 없어요", secDone:"완료",
+    clearDonePre:"완료 ", clearDonePost:"개 지우기",
+    todoCountPre:"할 일 ", todoCountUnit:"개", todoDonePre:" · 완료 ",
+    prLow:"낮음", prMid:"보통", prHigh:"높음",
+    ddayTitle:"디데이", ddaySub:"중요한 날까지 며칠 남았는지",
+    ddayEmpty:"아직 없어요 📌<br>시험·여행은 <b>디데이</b>, 기념일은 <b>디플러스</b>로 추가해 보세요.",
+    ddaySecDown:"📌 디데이 · 남은 날", ddaySecUp:"🎉 디플러스 · 지난 날부터",
+    ddayToday:"오늘", daythSuf:"일째", beforeStart:"시작 전",
+    calTitle:"캘린더", grassTitle:"🌱 달성 잔디 (최근 17주)", legendLess:"적음", legendMore:"많음",
+    calAvg:"이번 달 평균 달성률", calStreak:"연속 달성 (80%+)", calPerfect:"이번 달 100% 달성", calRec:"이번 달 기록한 날",
+    dayUnit:"일",
+    detailRoutine:"루틴 달성률", detailDday:"📌 디데이 · 디플러스", detailTodo:"📋 할 일",
+    detailEmpty:"이 날의 기록이 없어요", detailGo:"이 날 루틴 기록하기",
+    setTitle:"설정", secRoutine:"루틴 항목", addRoutine:"＋ 루틴 항목 추가", secApp:"앱 설정",
+    langName:"🌐 English mode", langDesc:"끄면 한국어로 표시",
+    darkName:"🌙 다크 모드", darkDesc:"어두운 곳에서 눈이 편한 테마",
+    secData:"데이터", exportBtn:"⬇ 데이터 내보내기 (백업)", resetBtn:"기록 초기화",
+    login2Btn:"Google로 로그인 (클라우드 저장)", logoutBtn:"로그아웃",
+    cloudSync:"클라우드 동기화", guestLocal:"게스트 · 이 기기에 저장",
+    tCounter:"카운터", tCheck:"체크", tMinutes:"시간(분)", tNote:"메모", tGroup:"그룹",
+    detTarget:" · 목표 ", unitTimes:"회", unitMin:"분", detItems:"개 · ",
+    goalAny:"하나만", goalAll:"모두",
+    metaTimesSep:" / ", metaTimesUnit:"회", metaMinUnit:"분",
+    running:"진행 중", done:"완료", notYet:"아직", noted:"기록함", noteFor:"기록용",
+    anyOne:"하나만 하면 완료 · ",
+    promptMin:"몇 분?", promptGroup:"새 그룹 이름",
+    todoAdd:"할 일 추가", todoEdit:"할 일 수정",
+    fLabelTodo:"할 일", fPhTodo:"무엇을 해야 하나요?",
+    fLabelPr:"중요도", fLabelGroup:"그룹", fPhNewGroup:"＋ 새 그룹",
+    fLabelDue:"마감일 (선택)", save:"저장", del:"삭제",
+    groupEdit:"그룹 수정", fLabelGroupName:"그룹 이름", groupDel:"그룹 삭제 (할 일은 유지)",
+    add:"추가", edit:"수정", fLabelType:"유형",
+    kindDown:"디데이 (남은 날)", kindUp:"디플러스 (지난 날)",
+    fLabelName:"이름", fPhDday:"예: 토익 시험 / 만난 날", fLabelDate:"날짜", fLabelIcon:"아이콘",
+    routineAdd:"루틴 항목 추가", itemEdit:"항목 수정", fPhRoutine:"예: 물 2L 마시기",
+    fLabelTargetCnt:"목표 횟수", fLabelTargetMin:"목표 시간 (분)",
+    fLabelNoteGuide:"안내 문구 (선택)", fPhNoteGuide:"예: 무슨 공부를 했나요?",
+    fLabelGoal:"완료 기준", goalAllBtn:"모두 해야 완료", goalAnyBtn:"하나만 해도 완료",
+    fLabelOpts:"항목", addOpt:"＋ 항목 추가", fPhOptName:"항목 이름",
+    confirmDelItem:"\" 항목을 삭제할까요?", confirmReset:"모든 루틴 기록 · 할 일 · 디데이를 초기화할까요? 되돌릴 수 없어요.",
+    loginFail:"로그인 실패: ", moduleFail:"네트워크 문제로 로그인 모듈을 못 불러왔어요. 새로고침 해주세요.",
+    nickDefault:"하루"
+  },
+  en: {
+    loading:"Loading…",
+    tagline:"All your daily routines in one place, made light ✓",
+    googleBtn:"Continue with Google", guestBtn:"Use on this device only (no login)",
+    authHint:"Sign in with Google to save your records to the cloud<br>and continue on any iPhone or PC.",
+    setupNotice:"⚙️ <b>Firebase isn't set up yet.</b><br>Follow <b>설정_가이드.md</b> in the folder to enable Google login and cloud save. Until then, use \"this device only\" below.",
+    moaTitle:"Back to Moa", toDark:"Switch to dark mode", toLight:"Switch to light mode",
+    todayJump:"↩ Today", today:"Today", ringCap:"done",
+    tabToday:"Today", tabTodo:"To-do", tabDday:"D-day", tabCal:"Calendar", tabSet:"Settings",
+    todoTitle:"To-do", sortDue:"📅 By due", sortPr:"🔥 By priority",
+    todoEmpty:"No tasks yet 📋<br>Tap ＋ at the top right to add one.",
+    grpNone:"No group", grpEmpty:"None yet", secDone:"Done",
+    clearDonePre:"Clear ", clearDonePost:" done",
+    todoCountPre:"", todoCountUnit:" tasks", todoDonePre:" · ",
+    prLow:"Low", prMid:"Normal", prHigh:"High",
+    ddayTitle:"D-day", ddaySub:"How many days until what matters",
+    ddayEmpty:"Nothing yet 📌<br>Add exams & trips as a <b>D-day</b>, anniversaries as a <b>D-plus</b>.",
+    ddaySecDown:"📌 D-day · Days left", ddaySecUp:"🎉 D-plus · Since the day",
+    ddayToday:"Today", daythSuf:"th day", beforeStart:"Not started",
+    calTitle:"Calendar", grassTitle:"🌱 Activity (last 17 weeks)", legendLess:"Less", legendMore:"More",
+    calAvg:"Avg this month", calStreak:"Streak (80%+)", calPerfect:"100% days this month", calRec:"Days logged this month",
+    dayUnit:"d",
+    detailRoutine:"Routine progress", detailDday:"📌 D-day · D-plus", detailTodo:"📋 To-do",
+    detailEmpty:"No records for this day", detailGo:"Log routines for this day",
+    setTitle:"Settings", secRoutine:"Routine items", addRoutine:"＋ Add routine item", secApp:"App settings",
+    langName:"🌐 한국어 (Korean)", langDesc:"Turn off for Korean",
+    darkName:"🌙 Dark mode", darkDesc:"Easy on the eyes in the dark",
+    secData:"Data", exportBtn:"⬇ Export data (backup)", resetBtn:"Reset records",
+    login2Btn:"Sign in with Google (cloud save)", logoutBtn:"Logout",
+    cloudSync:"Cloud sync", guestLocal:"Guest · saved on this device",
+    tCounter:"Counter", tCheck:"Check", tMinutes:"Minutes", tNote:"Note", tGroup:"Group",
+    detTarget:" · target ", unitTimes:"", unitMin:" min", detItems:" items · ",
+    goalAny:"any one", goalAll:"all",
+    metaTimesSep:" / ", metaTimesUnit:"", metaMinUnit:" min",
+    running:"Running", done:"Done", notYet:"Not yet", noted:"Noted", noteFor:"For notes",
+    anyOne:"Any one to finish · ",
+    promptMin:"How many minutes?", promptGroup:"New group name",
+    todoAdd:"Add task", todoEdit:"Edit task",
+    fLabelTodo:"Task", fPhTodo:"What needs to be done?",
+    fLabelPr:"Priority", fLabelGroup:"Group", fPhNewGroup:"＋ New group",
+    fLabelDue:"Due date (optional)", save:"Save", del:"Delete",
+    groupEdit:"Edit group", fLabelGroupName:"Group name", groupDel:"Delete group (keep tasks)",
+    add:"Add", edit:"Edit", fLabelType:"Type",
+    kindDown:"D-day (days left)", kindUp:"D-plus (days since)",
+    fLabelName:"Name", fPhDday:"e.g. TOEIC exam / the day we met", fLabelDate:"Date", fLabelIcon:"Icon",
+    routineAdd:"Add routine item", itemEdit:"Edit item", fPhRoutine:"e.g. Drink 2L of water",
+    fLabelTargetCnt:"Target count", fLabelTargetMin:"Target minutes",
+    fLabelNoteGuide:"Hint text (optional)", fPhNoteGuide:"e.g. What did you study?",
+    fLabelGoal:"Completion rule", goalAllBtn:"All to complete", goalAnyBtn:"Any one to complete",
+    fLabelOpts:"Items", addOpt:"＋ Add item", fPhOptName:"Item name",
+    confirmDelItem:"\" item?", confirmReset:"Reset all routine records, tasks and D-days? This can't be undone.",
+    loginFail:"Login failed: ", moduleFail:"Couldn't load the login module (network). Please refresh.",
+    nickDefault:"Haru"
+  }
+};
+const tr = k => (T[L] && T[L][k] != null) ? T[L][k] : (T.ko[k] != null ? T.ko[k] : k);
+const dow = i => L === "ko" ? DOW[i] : DOW_EN[i];
+const typeLabel = t => tr("t" + t.charAt(0).toUpperCase() + t.slice(1));
 
 /* ═════════ 기본 루틴 ═════════ */
 const DEFAULT_ROUTINE = [
@@ -480,7 +605,7 @@ const DEFAULT_ROUTINE = [
 const TYPE_LABEL = { counter:"카운터", check:"체크", minutes:"시간(분)", note:"메모", group:"그룹" };
 
 const freshState = () => ({
-  nick:"하루", created: todayKey(),
+  nick: tr("nickDefault"), created: todayKey(),
   routine: clone(DEFAULT_ROUTINE), logs:{}, todos:[], ddays:[], todoGroups:[]
 });
 
@@ -584,7 +709,7 @@ function tick(){
   for (const id in running){
     any = true;
     const el = $("tmr-" + id);
-    if (el){ const s = Math.floor((Date.now() - running[id].start) / 1000); el.textContent = "진행 중 " + Math.floor(s/60) + ":" + pad2(s%60); }
+    if (el){ const s = Math.floor((Date.now() - running[id].start) / 1000); el.textContent = tr("running") + " " + Math.floor(s/60) + ":" + pad2(s%60); }
   }
   if (!any && tickInt){ clearInterval(tickInt); tickInt = null; }
 }
@@ -603,12 +728,17 @@ function updateRing(){
   const C = 326.726;
   $("ring-fg").style.strokeDashoffset = C * (1 - st.pct / 100);
   $("ring-pct").textContent = st.pct + "%";
-  $("ring-cap").textContent = st.full + "/" + st.cnt + " 완료";
+  $("ring-cap").textContent = st.full + "/" + st.cnt + " " + tr("ringCap");
+}
+function fmtDate(d){
+  return L === "ko"
+    ? (d.getMonth()+1) + "월 " + d.getDate() + "일 (" + dow(d.getDay()) + ")"
+    : dow(d.getDay()) + ", " + ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()] + " " + d.getDate();
 }
 function renderToday(){
   const isToday = viewDate === todayKey();
   const d = parseKey(viewDate);
-  $("day-label").textContent = (isToday ? "오늘 · " : "") + (d.getMonth()+1) + "월 " + d.getDate() + "일 (" + DOW[d.getDay()] + ")";
+  $("day-label").textContent = (isToday ? tr("today") + " · " : "") + fmtDate(d);
   $("day-jump").classList.toggle("hidden", isToday);
   updateRing();
 
@@ -618,31 +748,31 @@ function renderToday(){
     const done = doneness(item, v) >= 1;
     let right = "", body = "", meta = "";
     if (item.type === "counter"){
-      meta = v + " / " + item.target + "회";
+      meta = v + tr("metaTimesSep") + item.target + tr("metaTimesUnit");
       right = `<div class="stepper"><button class="step-btn" data-act="dec" data-id="${item.id}">−</button>
         <span class="step-val">${v}</span><button class="step-btn" data-act="inc" data-id="${item.id}">＋</button></div>`;
     } else if (item.type === "check"){
-      meta = done ? "완료" : "아직";
+      meta = done ? tr("done") : tr("notYet");
       right = done ? `<div class="tag-done" data-act="toggle" data-id="${item.id}">✓</div>`
                    : `<div class="tag-off" data-act="toggle" data-id="${item.id}"></div>`;
     } else if (item.type === "minutes"){
       const run = !!running[item.id];
-      meta = run ? `<span id="tmr-${item.id}">진행 중 0:00</span>` : (v + " / " + item.target + "분");
+      meta = run ? `<span id="tmr-${item.id}">${tr("running")} 0:00</span>` : (v + tr("metaTimesSep") + item.target + tr("metaMinUnit"));
       right = `<div class="stepper">
         <button class="step-btn" data-act="m-dec" data-id="${item.id}">−</button>
         <span class="step-val" data-act="m-set" data-id="${item.id}">${v}</span>
         <button class="step-btn" data-act="m-inc" data-id="${item.id}">＋</button>
         <button class="mini-btn ${run?'play':''}" data-act="m-timer" data-id="${item.id}">${run?'⏸':'▶'}</button></div>`;
     } else if (item.type === "note"){
-      meta = v ? "기록함" : "기록용";
+      meta = v ? tr("noted") : tr("noteFor");
       body = `<div class="r-note"><textarea class="input" data-act="note" data-id="${item.id}" rows="2" placeholder="${esc(item.placeholder||'')}">${esc(v)}</textarea></div>`;
     } else if (item.type === "group"){
       const n = (item.options||[]).filter(o => v[o.id]).length;
-      meta = (item.goal === "any" ? "하나만 하면 완료 · " : "") + n + "/" + (item.options||[]).length;
+      meta = (item.goal === "any" ? tr("anyOne") : "") + n + "/" + (item.options||[]).length;
       body = `<div class="r-opts">` + (item.options||[]).map(o =>
         `<button class="opt-pill ${v[o.id]?'on':''}" data-act="opt" data-id="${item.id}" data-opt="${o.id}">${esc(o.name)}</button>`).join("") + `</div>`;
     }
-    return `<div class="r-item ${done?'done':''} ${meta.includes('진행 중')?'':''}">
+    return `<div class="r-item ${done?'done':''}">
       <div class="r-head">
         <div class="r-ic">${esc(item.icon||'•')}</div>
         <div class="r-info">
@@ -658,7 +788,7 @@ function renderToday(){
     const act = el.dataset.act;
     if (act === "note"){
       el.addEventListener("input", () => { setVal(viewDate, item, el.value); updateRing();
-        const m = el.closest(".r-item").querySelector(".r-meta"); if (m) m.textContent = el.value ? "기록함" : "기록용"; });
+        const m = el.closest(".r-item").querySelector(".r-meta"); if (m) m.textContent = el.value ? tr("noted") : tr("noteFor"); });
       return;
     }
     el.addEventListener("click", () => {
@@ -668,7 +798,7 @@ function renderToday(){
       else if (act === "toggle") setVal(viewDate, item, !v);
       else if (act === "m-inc") setVal(viewDate, item, v + 5);
       else if (act === "m-dec") setVal(viewDate, item, Math.max(0, v - 5));
-      else if (act === "m-set"){ const n = prompt("몇 분?", v); if (n != null && !isNaN(+n)) setVal(viewDate, item, Math.max(0, Math.round(+n))); }
+      else if (act === "m-set"){ const n = prompt(tr("promptMin"), v); if (n != null && !isNaN(+n)) setVal(viewDate, item, Math.max(0, Math.round(+n))); }
       else if (act === "m-timer"){ toggleTimer(item); return; }
       else if (act === "opt"){ const g = {...v}; g[el.dataset.opt] = !g[el.dataset.opt]; setVal(viewDate, item, g); }
       renderToday();
@@ -684,7 +814,7 @@ function dueChip(due, done){
   if (!due) return "";
   const diff = dayDiff(due, todayKey());
   const over = diff < 0 && !done;
-  const txt = diff > 0 ? "D-" + diff : diff === 0 ? "오늘" : "D+" + (-diff);
+  const txt = diff > 0 ? "D-" + diff : diff === 0 ? tr("today") : "D+" + (-diff);
   return `<span class="chip-due ${over?'over':''}">${txt}</span>`;
 }
 function sortTodos(arr){
@@ -694,14 +824,14 @@ function sortTodos(arr){
   else a.sort((x, y) => (y.pr - x.pr) || byDue(x, y));
   return a;
 }
-const PR_LABEL = ["낮음","보통","높음"];
+const PR_LABEL = () => [tr("prLow"), tr("prMid"), tr("prHigh")];
 function todoRow(t){
   return `<div class="todo ${t.done?'done':''}">
     <div class="box" data-act="chk" data-id="${t.id}">${t.done?'✓':''}</div>
     <div class="body" data-act="edit" data-id="${t.id}">
       <div class="t-text">${esc(t.text)}</div>
       <div class="t-meta">
-        <span class="chip-pr pr${t.pr}">${PR_LABEL[t.pr]}</span>
+        <span class="chip-pr pr${t.pr}">${PR_LABEL()[t.pr]}</span>
         ${dueChip(t.due, t.done)}
       </div>
     </div></div>`;
@@ -709,10 +839,10 @@ function todoRow(t){
 function renderTodos(){
   const active = state.todos.filter(t => !t.done);
   const done = state.todos.filter(t => t.done).sort((a,b) => (b.doneAt||0) - (a.doneAt||0));
-  $("todo-sub").textContent = "할 일 " + active.length + "개" + (done.length ? " · 완료 " + done.length : "");
+  $("todo-sub").textContent = tr("todoCountPre") + active.length + tr("todoCountUnit") + (done.length ? tr("todoDonePre") + tr("secDone") + " " + done.length : "");
   const box = $("todo-list");
   if (!active.length && !done.length && !state.todoGroups.length){
-    box.innerHTML = `<div class="empty-msg">아직 할 일이 없어요 📋<br>오른쪽 위 ＋ 로 추가해 보세요.</div>`; return;
+    box.innerHTML = `<div class="empty-msg">${tr("todoEmpty")}</div>`; return;
   }
   const groups = state.todoGroups;
   let html = "";
@@ -722,19 +852,19 @@ function renderTodos(){
       html += `<div class="grp-head"><span class="grp-name">${esc(g.name)}</span>`
         + `<span class="grp-cnt">${items.length}</span>`
         + `<button class="grp-edit" data-gedit="${g.id}">✎</button></div>`;
-      html += items.length ? items.map(todoRow).join("") : `<div class="grp-empty">아직 없어요</div>`;
+      html += items.length ? items.map(todoRow).join("") : `<div class="grp-empty">${tr("grpEmpty")}</div>`;
     });
     const ungrouped = sortTodos(active.filter(t => !t.gid || !groups.some(g => g.id === t.gid)));
     if (ungrouped.length){
-      html += `<div class="grp-head"><span class="grp-name">그룹 없음</span><span class="grp-cnt">${ungrouped.length}</span></div>`;
+      html += `<div class="grp-head"><span class="grp-name">${tr("grpNone")}</span><span class="grp-cnt">${ungrouped.length}</span></div>`;
       html += ungrouped.map(todoRow).join("");
     }
   } else {
     html += sortTodos(active).map(todoRow).join("");
   }
   if (done.length){
-    html += `<div class="section-label">완료</div>` + done.map(todoRow).join("")
-      + `<button class="btn btn-ghost" id="clear-done">완료 ${done.length}개 지우기</button>`;
+    html += `<div class="section-label">${tr("secDone")}</div>` + done.map(todoRow).join("")
+      + `<button class="btn btn-ghost" id="clear-done">${tr("clearDonePre")}${done.length}${tr("clearDonePost")}</button>`;
   }
   box.innerHTML = html;
   box.querySelectorAll("[data-act]").forEach(el => el.addEventListener("click", () => {
@@ -755,19 +885,19 @@ document.querySelectorAll("#todo-sort .seg-btn").forEach(b => b.addEventListener
 }));
 function openTodoSheet(t){
   const e = t || { id:uid7(), text:"", pr:1, due:"", done:false, gid:"" };
-  const grpPills = () => `<button class="pill ${!e.gid?'on':''}" data-g="">그룹 없음</button>`
+  const grpPills = () => `<button class="pill ${!e.gid?'on':''}" data-g="">${tr("grpNone")}</button>`
     + state.todoGroups.map(g => `<button class="pill ${e.gid===g.id?'on':''}" data-g="${g.id}">${esc(g.name)}</button>`).join("")
-    + `<button class="pill" data-g="__new__" style="border-style:dashed">＋ 새 그룹</button>`;
-  openSheet(`<h3>${t?"할 일 수정":"할 일 추가"}</h3>
-    <div class="field"><label>할 일</label><input class="input" id="f-text" value="${esc(e.text)}" placeholder="무엇을 해야 하나요?"></div>
-    <div class="field"><label>중요도</label><div class="seg" id="f-pr">
-      <button class="seg-btn ${e.pr===0?'on':''}" data-v="0">낮음</button>
-      <button class="seg-btn ${e.pr===1?'on':''}" data-v="1">보통</button>
-      <button class="seg-btn ${e.pr===2?'on':''}" data-v="2">높음</button></div></div>
-    <div class="field"><label>그룹</label><div class="pill-row" id="f-grp">${grpPills()}</div></div>
-    <div class="field"><label>마감일 (선택)</label><input class="input" type="date" id="f-due" value="${e.due}"></div>
-    <button class="btn btn-accent" id="f-save">저장</button>
-    ${t?'<button class="btn btn-ghost" id="f-del" style="color:var(--red);border-color:var(--red)">삭제</button>':''}`,
+    + `<button class="pill" data-g="__new__" style="border-style:dashed">${tr("fPhNewGroup")}</button>`;
+  openSheet(`<h3>${t?tr("todoEdit"):tr("todoAdd")}</h3>
+    <div class="field"><label>${tr("fLabelTodo")}</label><input class="input" id="f-text" value="${esc(e.text)}" placeholder="${tr("fPhTodo")}"></div>
+    <div class="field"><label>${tr("fLabelPr")}</label><div class="seg" id="f-pr">
+      <button class="seg-btn ${e.pr===0?'on':''}" data-v="0">${tr("prLow")}</button>
+      <button class="seg-btn ${e.pr===1?'on':''}" data-v="1">${tr("prMid")}</button>
+      <button class="seg-btn ${e.pr===2?'on':''}" data-v="2">${tr("prHigh")}</button></div></div>
+    <div class="field"><label>${tr("fLabelGroup")}</label><div class="pill-row" id="f-grp">${grpPills()}</div></div>
+    <div class="field"><label>${tr("fLabelDue")}</label><input class="input" type="date" id="f-due" value="${e.due}"></div>
+    <button class="btn btn-accent" id="f-save">${tr("save")}</button>
+    ${t?`<button class="btn btn-ghost" id="f-del" style="color:var(--red);border-color:var(--red)">${tr("del")}</button>`:''}`,
   () => {
     let pr = e.pr, gid = e.gid || "";
     $("f-pr").querySelectorAll(".seg-btn").forEach(b => b.addEventListener("click", () => {
@@ -776,7 +906,7 @@ function openTodoSheet(t){
     function bindGrp(){
       $("f-grp").querySelectorAll(".pill").forEach(b => b.addEventListener("click", () => {
         if (b.dataset.g === "__new__"){
-          const n = prompt("새 그룹 이름"); if (!n || !n.trim()) return;
+          const n = prompt(tr("promptGroup")); if (!n || !n.trim()) return;
           const ng = { id:uid7(), name:n.trim() }; state.todoGroups.push(ng); save();
           gid = ng.id; e.gid = gid; $("f-grp").innerHTML = grpPills(); bindGrp(); return;
         }
@@ -798,10 +928,10 @@ function openTodoSheet(t){
 }
 function openGroupSheet(g){
   if (!g) return;
-  openSheet(`<h3>그룹 수정</h3>
-    <div class="field"><label>그룹 이름</label><input class="input" id="g-name" value="${esc(g.name)}"></div>
-    <button class="btn btn-accent" id="g-save">저장</button>
-    <button class="btn btn-ghost" id="g-del" style="color:var(--red);border-color:var(--red)">그룹 삭제 (할 일은 유지)</button>`,
+  openSheet(`<h3>${tr("groupEdit")}</h3>
+    <div class="field"><label>${tr("fLabelGroupName")}</label><input class="input" id="g-name" value="${esc(g.name)}"></div>
+    <button class="btn btn-accent" id="g-save">${tr("save")}</button>
+    <button class="btn btn-ghost" id="g-del" style="color:var(--red);border-color:var(--red)">${tr("groupDel")}</button>`,
   () => {
     $("g-save").addEventListener("click", () => {
       const n = $("g-name").value.trim(); if (!n) return;
@@ -822,7 +952,7 @@ function ddNum(d, tk){
     const since = -diff; // 지난 날부터 며칠
     return { num: since >= 0 ? "D+" + since : "D-" + (-since),
              cls: since === 0 ? "today" : "up",
-             sub: since >= 0 ? (since + 1) + "일째" : "시작 전" };
+             sub: since >= 0 ? (L === "ko" ? (since + 1) + tr("daythSuf") : tr("daythSuf") + " " + (since + 1)) : tr("beforeStart") };
   }
   return { num: diff === 0 ? "D-DAY" : diff > 0 ? "D-" + diff : "D+" + (-diff),
            cls: diff === 0 ? "today" : diff > 0 ? (diff <= 7 ? "soon" : "") : "past",
@@ -834,12 +964,12 @@ function ddCard(d, tk){
   return `<div class="dday" data-id="${d.id}">
     <div class="d-ic">${esc(d.icon||'📌')}</div>
     <div><div class="d-title">${esc(d.title)}</div>
-      <div class="d-date">${dt.getFullYear()}. ${dt.getMonth()+1}. ${dt.getDate()} (${DOW[dt.getDay()]})${r.sub?' · '+r.sub:''}</div></div>
+      <div class="d-date">${dt.getFullYear()}. ${dt.getMonth()+1}. ${dt.getDate()} (${dow(dt.getDay())})${r.sub?' · '+r.sub:''}</div></div>
     <div class="d-num ${r.cls}">${r.num}</div></div>`;
 }
 function renderDdays(){
   const box = $("dday-list");
-  if (!state.ddays.length){ box.innerHTML = `<div class="empty-msg">아직 없어요 📌<br>시험·여행은 <b>디데이</b>, 기념일은 <b>디플러스</b>로 추가해 보세요.</div>`; return; }
+  if (!state.ddays.length){ box.innerHTML = `<div class="empty-msg">${tr("ddayEmpty")}</div>`; return; }
   const tk = todayKey();
   const downs = state.ddays.filter(d => d.kind !== "up").sort((a, b) => {
     const da = dayDiff(a.date, tk), db = dayDiff(b.date, tk);
@@ -849,8 +979,8 @@ function renderDdays(){
   });
   const ups = state.ddays.filter(d => d.kind === "up").sort((a, b) => dayDiff(a.date, tk) - dayDiff(b.date, tk));
   let html = "";
-  if (downs.length) html += `<div class="section-label">📌 디데이 · 남은 날</div>` + downs.map(d => ddCard(d, tk)).join("");
-  if (ups.length) html += `<div class="section-label">🎉 디플러스 · 지난 날부터</div>` + ups.map(d => ddCard(d, tk)).join("");
+  if (downs.length) html += `<div class="section-label">${tr("ddaySecDown")}</div>` + downs.map(d => ddCard(d, tk)).join("");
+  if (ups.length) html += `<div class="section-label">${tr("ddaySecUp")}</div>` + ups.map(d => ddCard(d, tk)).join("");
   box.innerHTML = html;
   box.querySelectorAll(".dday").forEach(el => el.addEventListener("click", () =>
     openDdaySheet(state.ddays.find(x => x.id === el.dataset.id))));
@@ -859,16 +989,16 @@ $("dday-add").addEventListener("click", () => openDdaySheet(null));
 function openDdaySheet(d){
   const e = d || { id:uid7(), title:"", date:todayKey(), icon:"📌", kind:"down" };
   const ICONS = ["📌","🎯","✈️","🎂","📝","💍","🏖️","🎓","💼","❤️"];
-  openSheet(`<h3>${d?"수정":"추가"}</h3>
-    <div class="field"><label>유형</label><div class="seg" id="f-kind">
-      <button class="seg-btn ${e.kind!=='up'?'on':''}" data-v="down">디데이 (남은 날)</button>
-      <button class="seg-btn ${e.kind==='up'?'on':''}" data-v="up">디플러스 (지난 날)</button></div></div>
-    <div class="field"><label>이름</label><input class="input" id="f-title" value="${esc(e.title)}" placeholder="예: 토익 시험 / 만난 날"></div>
-    <div class="field"><label>날짜</label><input class="input" type="date" id="f-date" value="${e.date}"></div>
-    <div class="field"><label>아이콘</label><div class="pill-row" id="f-icon">
+  openSheet(`<h3>${d?tr("edit"):tr("add")}</h3>
+    <div class="field"><label>${tr("fLabelType")}</label><div class="seg" id="f-kind">
+      <button class="seg-btn ${e.kind!=='up'?'on':''}" data-v="down">${tr("kindDown")}</button>
+      <button class="seg-btn ${e.kind==='up'?'on':''}" data-v="up">${tr("kindUp")}</button></div></div>
+    <div class="field"><label>${tr("fLabelName")}</label><input class="input" id="f-title" value="${esc(e.title)}" placeholder="${tr("fPhDday")}"></div>
+    <div class="field"><label>${tr("fLabelDate")}</label><input class="input" type="date" id="f-date" value="${e.date}"></div>
+    <div class="field"><label>${tr("fLabelIcon")}</label><div class="pill-row" id="f-icon">
       ${ICONS.map(i => `<button class="pill ${i===e.icon?'on':''}" data-i="${i}" style="font-size:18px">${i}</button>`).join("")}</div></div>
-    <button class="btn btn-accent" id="f-save">저장</button>
-    ${d?'<button class="btn btn-ghost" id="f-del" style="color:var(--red);border-color:var(--red)">삭제</button>':''}`,
+    <button class="btn btn-accent" id="f-save">${tr("save")}</button>
+    ${d?`<button class="btn btn-ghost" id="f-del" style="color:var(--red);border-color:var(--red)">${tr("del")}</button>`:''}`,
   () => {
     let icon = e.icon, kind = e.kind || "down";
     $("f-kind").querySelectorAll(".seg-btn").forEach(b => b.addEventListener("click", () => {
@@ -894,14 +1024,14 @@ function openDayDetail(dk){
   const st = dayStats(dk);
   const dds = state.ddays.filter(d => d.date === dk);
   const tds = state.todos.filter(t => t.due === dk);
-  let body = `<h3>${dt.getFullYear()}. ${dt.getMonth()+1}. ${dt.getDate()} (${DOW[dt.getDay()]})</h3>`;
-  body += `<div class="dd-detail-row"><span>루틴 달성률</span><b>${st.pct}% · ${st.full}/${st.cnt}</b></div>`;
-  if (dds.length) body += `<div class="dd-sec">📌 디데이 · 디플러스</div>`
+  let body = `<h3>${dt.getFullYear()}. ${dt.getMonth()+1}. ${dt.getDate()} (${dow(dt.getDay())})</h3>`;
+  body += `<div class="dd-detail-row"><span>${tr("detailRoutine")}</span><b>${st.pct}% · ${st.full}/${st.cnt}</b></div>`;
+  if (dds.length) body += `<div class="dd-sec">${tr("detailDday")}</div>`
     + dds.map(d => `<div class="dd-detail-row"><span>${esc(d.icon)} ${esc(d.title)}</span><b>${ddNum(d, tk).num}</b></div>`).join("");
-  if (tds.length) body += `<div class="dd-sec">📋 할 일</div>`
-    + tds.map(t => `<div class="dd-detail-row"><span>${t.done?'✓ ':''}${esc(t.text)}</span><b class="chip-pr pr${t.pr}">${PR_LABEL[t.pr]}</b></div>`).join("");
-  if (!dds.length && !tds.length && st.pct === 0) body += `<div class="empty-msg" style="padding:20px 10px">이 날의 기록이 없어요</div>`;
-  body += `<button class="btn btn-accent" id="dd-go">이 날 루틴 기록하기</button>`;
+  if (tds.length) body += `<div class="dd-sec">${tr("detailTodo")}</div>`
+    + tds.map(t => `<div class="dd-detail-row"><span>${t.done?'✓ ':''}${esc(t.text)}</span><b class="chip-pr pr${t.pr}">${PR_LABEL()[t.pr]}</b></div>`).join("");
+  if (!dds.length && !tds.length && st.pct === 0) body += `<div class="empty-msg" style="padding:20px 10px">${tr("detailEmpty")}</div>`;
+  body += `<button class="btn btn-accent" id="dd-go">${tr("detailGo")}</button>`;
   openSheet(body, () => $("dd-go").addEventListener("click", () => { viewDate = dk; closeSheet(); showTab("today"); }));
 }
 
@@ -915,7 +1045,9 @@ function tint(pct){
   return { bg, fg };
 }
 function renderCalendar(){
-  $("cal-mon").textContent = calY + "년 " + (calM+1) + "월";
+  $("cal-mon").textContent = L === "ko"
+    ? (calY + "년 " + (calM+1) + "월")
+    : (["January","February","March","April","May","June","July","August","September","October","November","December"][calM] + " " + calY);
   const first = new Date(calY, calM, 1);
   const lead = first.getDay();
   const days = new Date(calY, calM+1, 0).getDate();
@@ -924,7 +1056,7 @@ function renderCalendar(){
   const dueMap = {}; state.todos.forEach(t => { if (t.due && !t.done){ (dueMap[t.due] = dueMap[t.due] || []).push(t.pr); } });
   const ddMap = {}; state.ddays.forEach(d => { (ddMap[d.date] = ddMap[d.date] || []).push(d); });
 
-  let html = DOW.map((d,i) => `<div class="cal-dow ${i===0?'sun':i===6?'sat':''}">${d}</div>`).join("");
+  let html = DOW.map((d,i) => `<div class="cal-dow ${i===0?'sun':i===6?'sat':''}">${dow(i)}</div>`).join("");
   for (let i = 0; i < lead; i++) html += `<div class="cal-cell empty"></div>`;
   for (let day = 1; day <= days; day++){
     const dk = calY + "-" + pad2(calM+1) + "-" + pad2(day);
@@ -957,10 +1089,10 @@ function renderCalendar(){
   if (dayStats(d).pct < 80) d = addDays(d, -1);
   while (dayStats(d).pct >= 80){ streak++; d = addDays(d, -1); }
   $("cal-stats").innerHTML = `
-    <div class="stat-box"><div class="v">${avg}%</div><div class="k">이번 달 평균 달성률</div></div>
-    <div class="stat-box"><div class="v">${streak}일</div><div class="k">연속 달성 (80%+)</div></div>
-    <div class="stat-box"><div class="v">${perfect}일</div><div class="k">이번 달 100% 달성</div></div>
-    <div class="stat-box"><div class="v">${rec}일</div><div class="k">이번 달 기록한 날</div></div>`;
+    <div class="stat-box"><div class="v">${avg}%</div><div class="k">${tr("calAvg")}</div></div>
+    <div class="stat-box"><div class="v">${streak}${tr("dayUnit")}</div><div class="k">${tr("calStreak")}</div></div>
+    <div class="stat-box"><div class="v">${perfect}${tr("dayUnit")}</div><div class="k">${tr("calPerfect")}</div></div>
+    <div class="stat-box"><div class="v">${rec}${tr("dayUnit")}</div><div class="k">${tr("calRec")}</div></div>`;
 
   // 잔디 (최근 17주)
   const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -979,22 +1111,23 @@ $("cal-next").addEventListener("click", () => { calM++; if (calM > 11){ calM = 0
 /* ═════════ 설정 + 루틴 편집 ═════════ */
 function setAvatar(el){
   if (mode === "cloud" && photoURL){ el.innerHTML = ""; const img = document.createElement("img"); img.src = photoURL; img.referrerPolicy = "no-referrer"; el.appendChild(img); }
-  else el.textContent = (state.nick || "하").charAt(0);
+  else el.textContent = (state.nick || tr("nickDefault")).charAt(0);
 }
 function renderSettings(){
   setAvatar($("set-avatar"));
-  $("set-nick").textContent = state.nick || "하루";
-  $("set-mail").textContent = mode === "cloud" ? (userEmail + " · 클라우드 동기화") : "게스트 · 이 기기에 저장";
+  $("set-nick").textContent = state.nick || tr("nickDefault");
+  $("set-mail").textContent = mode === "cloud" ? (userEmail + " · " + tr("cloudSync")) : tr("guestLocal");
   $("set-dark").checked = document.documentElement.dataset.theme === "dark";
+  const sl = $("set-lang"); if (sl) sl.checked = (L === "en");
   $("btn-logout").classList.toggle("hidden", mode !== "cloud");
   $("btn-login2").classList.toggle("hidden", mode === "cloud" || !FB);
 
   const box = $("routine-edit");
   box.innerHTML = state.routine.map((item, i) => {
-    let detail = TYPE_LABEL[item.type];
-    if (item.type === "counter") detail += " · 목표 " + item.target + "회";
-    else if (item.type === "minutes") detail += " · 목표 " + item.target + "분";
-    else if (item.type === "group") detail += " · " + (item.options||[]).length + "개 · " + (item.goal==="any"?"하나만":"모두");
+    let detail = typeLabel(item.type);
+    if (item.type === "counter") detail += tr("detTarget") + item.target + tr("unitTimes");
+    else if (item.type === "minutes") detail += tr("detTarget") + item.target + tr("unitMin");
+    else if (item.type === "group") detail += " · " + (item.options||[]).length + tr("detItems") + (item.goal==="any"?tr("goalAny"):tr("goalAll"));
     return `<div class="edit-item">
       <div class="e-ic">${esc(item.icon||'•')}</div>
       <div><div class="e-name">${esc(item.name)}</div><div class="e-type">${detail}</div></div>
@@ -1010,11 +1143,12 @@ function renderSettings(){
     if (act === "up" && i > 0){ [R[i-1], R[i]] = [R[i], R[i-1]]; save(); renderSettings(); }
     else if (act === "down" && i < R.length-1){ [R[i+1], R[i]] = [R[i], R[i+1]]; save(); renderSettings(); }
     else if (act === "edit") openItemSheet(R[i]);
-    else if (act === "del"){ if (confirm(`"${R[i].name}" 항목을 삭제할까요?`)){ R.splice(i, 1); save(); renderSettings(); } }
+    else if (act === "del"){ if (confirm(`"${R[i].name}${tr("confirmDelItem")}`)){ R.splice(i, 1); save(); renderSettings(); } }
   }));
 }
 $("add-routine").addEventListener("click", () => openItemSheet(null));
 $("set-dark").addEventListener("change", () => setTheme($("set-dark").checked ? "dark" : "light"));
+$("set-lang").addEventListener("change", () => applyLang($("set-lang").checked ? "en" : "ko"));
 $("btn-export").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(state, null, 2)], { type:"application/json" });
   const a = document.createElement("a");
@@ -1022,7 +1156,7 @@ $("btn-export").addEventListener("click", () => {
   URL.revokeObjectURL(a.href);
 });
 $("btn-reset").addEventListener("click", () => {
-  if (!confirm("모든 루틴 기록 · 할 일 · 디데이를 초기화할까요? 되돌릴 수 없어요.")) return;
+  if (!confirm(tr("confirmReset"))) return;
   state = normalize(freshState()); save(); flushSave(); viewDate = todayKey(); showTab("today");
 });
 $("btn-login2").addEventListener("click", async () => {
@@ -1040,15 +1174,15 @@ function openItemSheet(item){
   const isNew = !item;
   const e = item || { id:uid7(), type:"counter", icon:"✓", name:"", target:1, goal:"all", options:[] };
   const ICONS = ["✓","🦉","あ","ア","💊","📺","📖","📝","💪","🧖","💧","🏃","🧘","☀️","🌙","🍎","💤","🎯"];
-  const typeSeg = isNew ? `<div class="field"><label>유형</label><div class="seg" id="f-type">
-      ${Object.entries(TYPE_LABEL).map(([k,v]) => `<button class="seg-btn ${k===e.type?'on':''}" data-v="${k}">${v}</button>`).join("")}</div></div>` : "";
-  openSheet(`<h3>${isNew?"루틴 항목 추가":"항목 수정"}</h3>
-    <div class="field"><label>이름</label><input class="input" id="f-name" value="${esc(e.name)}" placeholder="예: 물 2L 마시기"></div>
-    <div class="field"><label>아이콘</label><div class="pill-row" id="f-icon">
+  const typeSeg = isNew ? `<div class="field"><label>${tr("fLabelType")}</label><div class="seg" id="f-type">
+      ${Object.keys(TYPE_LABEL).map(k => `<button class="seg-btn ${k===e.type?'on':''}" data-v="${k}">${typeLabel(k)}</button>`).join("")}</div></div>` : "";
+  openSheet(`<h3>${isNew?tr("routineAdd"):tr("itemEdit")}</h3>
+    <div class="field"><label>${tr("fLabelName")}</label><input class="input" id="f-name" value="${esc(e.name)}" placeholder="${tr("fPhRoutine")}"></div>
+    <div class="field"><label>${tr("fLabelIcon")}</label><div class="pill-row" id="f-icon">
       ${ICONS.map(i => `<button class="pill ${i===e.icon?'on':''}" data-i="${i}" style="font-size:17px">${i}</button>`).join("")}</div></div>
     ${typeSeg}
     <div id="f-extra"></div>
-    <button class="btn btn-accent" id="f-save">저장</button>`,
+    <button class="btn btn-accent" id="f-save">${tr("save")}</button>`,
   () => {
     let type = e.type, icon = e.icon, goal = e.goal || "all";
     let opts = (e.options || []).map(o => ({ ...o }));
@@ -1057,15 +1191,15 @@ function openItemSheet(item){
     }));
     function renderExtra(){
       const x = $("f-extra"); x.innerHTML = "";
-      if (type === "counter") x.innerHTML = `<div class="field"><label>목표 횟수</label><input class="input" type="number" min="1" id="f-target" value="${e.target||4}"></div>`;
-      else if (type === "minutes") x.innerHTML = `<div class="field"><label>목표 시간 (분)</label><input class="input" type="number" min="1" id="f-target" value="${e.target||30}"></div>`;
-      else if (type === "note") x.innerHTML = `<div class="field"><label>안내 문구 (선택)</label><input class="input" id="f-ph" value="${esc(e.placeholder||'')}" placeholder="예: 무슨 공부를 했나요?"></div>`;
+      if (type === "counter") x.innerHTML = `<div class="field"><label>${tr("fLabelTargetCnt")}</label><input class="input" type="number" min="1" id="f-target" value="${e.target||4}"></div>`;
+      else if (type === "minutes") x.innerHTML = `<div class="field"><label>${tr("fLabelTargetMin")}</label><input class="input" type="number" min="1" id="f-target" value="${e.target||30}"></div>`;
+      else if (type === "note") x.innerHTML = `<div class="field"><label>${tr("fLabelNoteGuide")}</label><input class="input" id="f-ph" value="${esc(e.placeholder||'')}" placeholder="${tr("fPhNoteGuide")}"></div>`;
       else if (type === "group"){
-        x.innerHTML = `<div class="field"><label>완료 기준</label><div class="seg" id="f-goal">
-          <button class="seg-btn ${goal==='all'?'on':''}" data-v="all">모두 해야 완료</button>
-          <button class="seg-btn ${goal==='any'?'on':''}" data-v="any">하나만 해도 완료</button></div></div>
-          <div class="field"><label>항목</label><div id="f-opts"></div>
-          <button class="mini-btn" id="f-addopt" style="margin-top:6px">＋ 항목 추가</button></div>`;
+        x.innerHTML = `<div class="field"><label>${tr("fLabelGoal")}</label><div class="seg" id="f-goal">
+          <button class="seg-btn ${goal==='all'?'on':''}" data-v="all">${tr("goalAllBtn")}</button>
+          <button class="seg-btn ${goal==='any'?'on':''}" data-v="any">${tr("goalAnyBtn")}</button></div></div>
+          <div class="field"><label>${tr("fLabelOpts")}</label><div id="f-opts"></div>
+          <button class="mini-btn" id="f-addopt" style="margin-top:6px">${tr("addOpt")}</button></div>`;
         $("f-goal").querySelectorAll(".seg-btn").forEach(b => b.addEventListener("click", () => {
           goal = b.dataset.v; $("f-goal").querySelectorAll(".seg-btn").forEach(z => z.classList.toggle("on", z === b));
         }));
@@ -1076,7 +1210,7 @@ function openItemSheet(item){
     function renderOpts(){
       const c = $("f-opts");
       c.innerHTML = opts.map((o, i) => `<div style="display:flex;gap:7px;margin-bottom:6px">
-        <input class="input" data-i="${i}" value="${esc(o.name)}" placeholder="항목 이름">
+        <input class="input" data-i="${i}" value="${esc(o.name)}" placeholder="${tr("fPhOptName")}">
         <button class="e-act" data-del="${i}" style="flex:0 0 auto">🗑</button></div>`).join("");
       c.querySelectorAll("input").forEach(inp => inp.addEventListener("input", () => opts[+inp.dataset.i].name = inp.value));
       c.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => { opts.splice(+b.dataset.del, 1); renderOpts(); }));
@@ -1112,7 +1246,10 @@ function applyTheme(t){
   document.documentElement.dataset.theme = t;
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = t === "dark" ? "#111219" : "#f4f4f1";
-  document.querySelectorAll(".theme-btn").forEach(b => b.textContent = t === "dark" ? "☀️" : "🌙");
+  document.querySelectorAll(".theme-btn").forEach(b => {
+    b.textContent = t === "dark" ? "☀️" : "🌙";
+    b.title = tr(t === "dark" ? "toLight" : "toDark");
+  });
 }
 function setTheme(t){
   localStorage.setItem(LS_THEME, t); applyTheme(t);
@@ -1123,6 +1260,29 @@ document.querySelectorAll(".theme-btn").forEach(b => b.addEventListener("click",
   setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark")));
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => { if (!localStorage.getItem(LS_THEME)) applyTheme(e.matches ? "dark" : "light"); });
 applyTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
+
+/* ═════════ 언어 적용 ═════════ */
+function applyStaticLang(){
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = tr(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-title]").forEach(el => { el.title = tr(el.dataset.i18nTitle); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = tr(el.dataset.i18nPh); });
+  document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", tr(el.dataset.i18nAria)); });
+}
+function applyLang(lang){
+  L = (lang === "en") ? "en" : "ko";
+  localStorage.setItem(LS_LANG, L);
+  document.documentElement.lang = L;
+  applyStaticLang();
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light"); // 테마 버튼 title 갱신
+  document.querySelectorAll(".lang-btn").forEach(b => b.textContent = (L === "en") ? "한" : "EN");
+  const sl = $("set-lang"); if (sl) sl.checked = (L === "en");
+  if (state){
+    closeSheet();                       // 열려 있던 시트는 닫아 옛 언어 잔상 제거
+    if (curTab && !$("screen-" + curTab).classList.contains("hidden")) showTab(curTab);
+  }
+}
+document.querySelectorAll(".lang-btn").forEach(b =>
+  b.addEventListener("click", () => applyLang(L === "en" ? "ko" : "en")));
 
 /* ═════════ 로그인 (Google / 게스트) ═════════ */
 const authMsg = t => { $("auth-msg").textContent = t || ""; };
@@ -1159,13 +1319,14 @@ $("btn-google").addEventListener("click", async () => {
     if (e.code === "auth/popup-blocked" || e.code === "auth/operation-not-supported-in-this-environment"){
       try { await FB.signInWithRedirect(FB.auth, FB.provider); return; } catch(e2){ e = e2; }
     }
-    if (e.code !== "auth/popup-closed-by-user" && e.code !== "auth/cancelled-popup-request") authMsg("로그인 실패: " + (e.code || e.message));
+    if (e.code !== "auth/popup-closed-by-user" && e.code !== "auth/cancelled-popup-request") authMsg(tr("loginFail") + (e.code || e.message));
     $("btn-google").disabled = false;
   }
 });
 
 /* ═════════ 초기화 ═════════ */
 showLoading();
+applyLang(L);
 (async () => {
   const ok = await initFirebase();
   if (ok){
@@ -1178,7 +1339,7 @@ showLoading();
   } else {
     $("btn-google").disabled = true;
     if (!fbConfigured) $("setup-notice").classList.remove("hidden");
-    else authMsg("네트워크 문제로 로그인 모듈을 못 불러왔어요. 새로고침 해주세요.");
+    else authMsg(tr("moduleFail"));
     if (localStorage.getItem(LS_MODE) === "guest") startGuest(); else showAuth();
   }
 })();
