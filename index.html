@@ -169,7 +169,34 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
 .cal-head{ display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:14px; }
 .cal-head .nav-arrow{ background:var(--card); border:1px solid var(--line); width:36px; height:36px; border-radius:11px; font-size:16px; color:var(--sub); cursor:pointer; }
 .cal-head .mon{ font-size:17px; font-weight:800; min-width:130px; text-align:center; }
+/* 보기 대상 선택 버튼(전체/루틴) — 가로 스크롤 대신 한 줄 드롭다운 */
+.cal-sel{ display:flex; align-items:center; gap:11px; width:100%; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:11px 14px; margin-bottom:13px; cursor:pointer; box-shadow:var(--shadow); text-align:left; }
+.cal-sel:active{ transform:scale(.99); }
+.cal-sel-ic{ width:36px; height:36px; border-radius:11px; background:var(--green-soft); display:flex; align-items:center; justify-content:center; font-size:19px; flex:0 0 auto; }
+.cal-sel-text{ flex:1; min-width:0; }
+.cal-sel-name{ display:block; font-size:15px; font-weight:800; letter-spacing:-0.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cal-sel-cap{ display:block; font-size:12px; color:var(--sub); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cal-sel-arrow{ color:var(--sub); font-size:13px; flex:0 0 auto; }
+/* 루틴 선택 시트 행 */
+.cal-pick-row{ display:flex; align-items:center; gap:12px; width:100%; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:8px; cursor:pointer; text-align:left; }
+.cal-pick-row.on{ border-color:var(--brand); background:var(--green-soft); }
+.cal-pick-row:active{ transform:scale(.99); }
+.cp-ic{ width:38px; height:38px; border-radius:11px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; font-size:19px; flex:0 0 auto; }
+.cal-pick-row.on .cp-ic{ background:var(--card); }
+.cp-info{ flex:1; min-width:0; }
+.cp-name{ display:block; font-size:15px; font-weight:700; }
+.cp-cap{ display:block; font-size:12px; color:var(--sub); margin-top:1px; }
+.cal-pick-row.on .cp-cap{ color:var(--brand); }
+.cp-bar{ display:block; height:5px; border-radius:99px; background:var(--track); margin-top:7px; overflow:hidden; }
+.cp-bar > i{ display:block; height:100%; background:var(--brand); border-radius:99px; }
+.cp-chk{ color:var(--brand); font-weight:900; font-size:18px; flex:0 0 auto; }
 .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+/* 연속 스크롤 달력 */
+#cal-dow-head{ margin-bottom:4px; }
+.cal-scroll{ max-height:54vh; overflow-y:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+.cal-scroll::-webkit-scrollbar{ display:none; }
+.cal-mlabel{ position:sticky; top:0; z-index:2; background:var(--bg); font-size:13px; font-weight:800; color:var(--sub); padding:13px 2px 6px; }
+.cal-month + .cal-month{ margin-top:2px; }
 .cal-dow{ text-align:center; font-size:11px; font-weight:800; color:var(--sub); padding:2px 0 6px; }
 .cal-dow.sun{ color:var(--red); } .cal-dow.sat{ color:var(--accent); }
 .cal-cell{ aspect-ratio:1/1; border-radius:10px; border:1px solid var(--line); background:var(--card); position:relative; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700; cursor:pointer; overflow:hidden; }
@@ -349,19 +376,19 @@ textarea.input{ resize:vertical; min-height:70px; line-height:1.5; }
 <!-- ═════════ 캘린더 ═════════ -->
 <div id="screen-calendar" class="hidden">
   <div class="appbar"><div class="page-title" data-i18n="calTitle">캘린더</div></div>
-  <div class="cal-head">
-    <button class="nav-arrow" id="cal-prev">‹</button>
-    <div class="mon" id="cal-mon">2026년 6월</div>
-    <button class="nav-arrow" id="cal-next">›</button>
-  </div>
-  <div class="cal-grid" id="cal-grid"></div>
-  <div class="cal-legend"><span>0%</span><i style="background:var(--hm0)"></i><i style="background:var(--hm1)"></i><i style="background:var(--hm2)"></i><i style="background:var(--hm3)"></i><i style="background:var(--hm4)"></i><span>100%</span></div>
+  <button class="cal-sel" id="cal-sel" aria-haspopup="true">
+    <span class="cal-sel-ic" id="cal-sel-ic">📊</span>
+    <span class="cal-sel-text">
+      <span class="cal-sel-name" id="cal-sel-name">전체</span>
+      <span class="cal-sel-cap" id="cal-sel-cap"></span>
+    </span>
+    <span class="cal-sel-arrow">▾</span>
+  </button>
+  <div class="cal-grid" id="cal-dow-head"></div>
+  <div class="cal-scroll" id="cal-scroll"></div>
+  <button class="today-jump hidden" id="cal-today" data-i18n="todayJump">↩ 오늘로</button>
+  <div class="cal-legend" id="cal-legend"></div>
   <div class="stat-grid" id="cal-stats"></div>
-  <div class="panel" style="margin-top:14px;">
-    <div class="panel-title" data-i18n="grassTitle">🌱 달성 잔디 (최근 17주)</div>
-    <div class="hm-wrap"><div class="hm-grid" id="hm-grid"></div></div>
-    <div class="hm-legend"><span data-i18n="legendLess">적음</span><span class="hm-cell"></span><span class="hm-cell l1"></span><span class="hm-cell l2"></span><span class="hm-cell l3"></span><span class="hm-cell l4"></span><span data-i18n="legendMore">많음</span></div>
-  </div>
 </div>
 
 <!-- ═════════ 설정 ═════════ -->
@@ -495,6 +522,9 @@ const T = {
     ddayToday:"오늘", daythSuf:"일째", beforeStart:"시작 전",
     calTitle:"캘린더", grassTitle:"🌱 달성 잔디 (최근 17주)", legendLess:"적음", legendMore:"많음",
     calAvg:"이번 달 평균 달성률", calStreak:"연속 달성 (80%+)", calPerfect:"이번 달 100% 달성", calRec:"이번 달 기록한 날",
+    calAll:"전체", prDaysAchieved:"달성한 날", prRate:"달성률", prStreakCur:"현재 연속", prStreakBest:"최고 연속",
+    grassTitleR:"🌱 달성 잔디", detailByRoutine:"루틴별 기록",
+    calAllDesc:"하루 전체 달성률", calPickTitle:"무엇을 볼까요?", calThisMonth:"이번 달",
     dayUnit:"일",
     detailRoutine:"루틴 달성률", detailDday:"📌 디데이 · 디플러스", detailTodo:"📋 할 일",
     detailEmpty:"이 날의 기록이 없어요", detailGo:"이 날 루틴 기록하기",
@@ -549,6 +579,9 @@ const T = {
     ddayToday:"Today", daythSuf:"th day", beforeStart:"Not started",
     calTitle:"Calendar", grassTitle:"🌱 Activity (last 17 weeks)", legendLess:"Less", legendMore:"More",
     calAvg:"Avg this month", calStreak:"Streak (80%+)", calPerfect:"100% days this month", calRec:"Days logged this month",
+    calAll:"All", prDaysAchieved:"Days achieved", prRate:"Achieved rate", prStreakCur:"Current streak", prStreakBest:"Best streak",
+    grassTitleR:"🌱 Activity", detailByRoutine:"By routine",
+    calAllDesc:"Overall daily rate", calPickTitle:"What to view?", calThisMonth:"This month",
     dayUnit:"d",
     detailRoutine:"Routine progress", detailDday:"📌 D-day · D-plus", detailTodo:"📋 To-do",
     detailEmpty:"No records for this day", detailGo:"Log routines for this day",
@@ -613,7 +646,7 @@ const freshState = () => ({
 const LS_GUEST = "haru-guest", LS_MODE = "haru-mode", LS_THEME = "haru-theme";
 let state = null, mode = null, uid = null, userEmail = "", photoURL = "";
 let viewDate = todayKey(), curTab = "today", todoSort = "due";
-let calY, calM;
+let calY, calM, calRoutine = null; // calRoutine: null=전체, 아니면 루틴 id
 
 function normalize(s){
   const d = freshState();
@@ -678,6 +711,22 @@ function dayStats(dk){
   return { pct: cnt ? Math.round(100 * sum / cnt) : 0, full, cnt };
 }
 const grassLevel = pct => pct <= 0 ? 0 : pct < 34 ? 1 : pct < 67 ? 2 : pct < 100 ? 3 : 4;
+/* 루틴 1개의 그날 달성도(0~1). doneness 와 달리 메모(note)도 글이 있으면 1로 친다(루틴별 보기용). */
+function itemFill(item, v){
+  switch (item.type){
+    case "counter":
+    case "minutes": return item.target > 0 ? Math.min(1, v / item.target) : (v > 0 ? 1 : 0);
+    case "check":   return v ? 1 : 0;
+    case "group": {
+      const opts = item.options || [];
+      if (!opts.length) return 0;
+      const n = opts.filter(o => v[o.id]).length;
+      return item.goal === "any" ? (n > 0 ? 1 : 0) : n / opts.length;
+    }
+    case "note":    return (v && String(v).trim()) ? 1 : 0;
+    default:        return 0;
+  }
+}
 
 /* ═════════ 화면 전환 ═════════ */
 const APP_SCREENS = ["today","todo","dday","calendar","settings"];
@@ -1026,11 +1075,30 @@ function openDayDetail(dk){
   const tds = state.todos.filter(t => t.due === dk);
   let body = `<h3>${dt.getFullYear()}. ${dt.getMonth()+1}. ${dt.getDate()} (${dow(dt.getDay())})</h3>`;
   body += `<div class="dd-detail-row"><span>${tr("detailRoutine")}</span><b>${st.pct}% · ${st.full}/${st.cnt}</b></div>`;
+  // 루틴별 그날 기록 (히라가나 2/4 처럼 항목마다 무엇을 했는지). 아무것도 안 한 날은 생략.
+  const anyRoutine = state.routine.some(it => itemFill(it, getVal(dk, it)) > 0);
+  if (state.routine.length && anyRoutine){
+    body += `<div class="dd-sec">${tr("detailByRoutine")}</div>`;
+    body += state.routine.map(item => {
+      const v = getVal(dk, item);
+      const done = itemFill(item, v) >= 1;
+      const anyGroup = item.type === "group" && item.goal === "any";
+      let val;
+      if (item.type === "counter")      val = v + " / " + item.target + tr("metaTimesUnit");
+      else if (item.type === "minutes") val = v + " / " + item.target + tr("metaMinUnit");
+      else if (item.type === "check")   val = done ? "✓" : "—";
+      else if (anyGroup)                val = done ? "✓" : "—";   // '하나만' 그룹은 달성/미달성만 표시
+      else if (item.type === "group")   val = (item.options||[]).filter(o => v[o.id]).length + " / " + (item.options||[]).length;
+      else                              val = (v && String(v).trim()) ? tr("noted") : "—";
+      const mark = (done && item.type !== "check" && !anyGroup) ? ' ✓' : '';
+      return `<div class="dd-detail-row"><span>${esc(item.icon||'•')} ${esc(item.name)}</span><b style="color:${done?'var(--brand)':'var(--sub)'}">${esc(val)}${mark}</b></div>`;
+    }).join("");
+  }
   if (dds.length) body += `<div class="dd-sec">${tr("detailDday")}</div>`
     + dds.map(d => `<div class="dd-detail-row"><span>${esc(d.icon)} ${esc(d.title)}</span><b>${ddNum(d, tk).num}</b></div>`).join("");
   if (tds.length) body += `<div class="dd-sec">${tr("detailTodo")}</div>`
     + tds.map(t => `<div class="dd-detail-row"><span>${t.done?'✓ ':''}${esc(t.text)}</span><b class="chip-pr pr${t.pr}">${PR_LABEL()[t.pr]}</b></div>`).join("");
-  if (!dds.length && !tds.length && st.pct === 0) body += `<div class="empty-msg" style="padding:20px 10px">${tr("detailEmpty")}</div>`;
+  if (!anyRoutine && !dds.length && !tds.length) body += `<div class="empty-msg" style="padding:20px 10px">${tr("detailEmpty")}</div>`;
   body += `<button class="btn btn-accent" id="dd-go">${tr("detailGo")}</button>`;
   openSheet(body, () => $("dd-go").addEventListener("click", () => { viewDate = dk; closeSheet(); showTab("today"); }));
 }
@@ -1044,69 +1112,165 @@ function tint(pct){
   const fg = dark ? "#eef2ee" : (r > 0.55 ? "#fff" : "#1f2a22");
   return { bg, fg };
 }
+/* 표시 중인 달(calY/calM)에서 한 루틴의 달성 일수/대상 일수 (가입 전·미래 제외) */
+function monthAchieved(item){
+  const days = new Date(calY, calM+1, 0).getDate(), tk = todayKey();
+  let a = 0, e = 0;
+  for (let day = 1; day <= days; day++){
+    const dk = calY + "-" + pad2(calM+1) + "-" + pad2(day);
+    if (parseKey(dk) > parseKey(tk)) continue;
+    if (state.created && dayDiff(dk, state.created) < 0) continue;
+    e++; if (itemFill(item, getVal(dk, item)) >= 1) a++;
+  }
+  return { a, e };
+}
+/* 표시 중인 달의 하루 종합 평균 달성률(%) */
+function monthAvgPct(){
+  const days = new Date(calY, calM+1, 0).getDate(), tk = todayKey();
+  let sum = 0, e = 0;
+  for (let day = 1; day <= days; day++){
+    const dk = calY + "-" + pad2(calM+1) + "-" + pad2(day);
+    if (parseKey(dk) > parseKey(tk)) continue;
+    if (state.created && dayDiff(dk, state.created) < 0) continue;
+    e++; sum += dayStats(dk).pct;
+  }
+  return e ? Math.round(sum / e) : 0;
+}
+/* 보기 대상 선택 시트 (전체 + 각 루틴, 이번 달 진행도 함께 표시) */
+function openRoutinePicker(){
+  const pct = v => Math.max(0, Math.min(100, v));
+  const row = (rid, icon, name, cap, bar, on) =>
+    `<button class="cal-pick-row ${on?'on':''}" data-rid="${rid}">
+       <span class="cp-ic">${esc(icon)}</span>
+       <span class="cp-info"><span class="cp-name">${esc(name)}</span><span class="cp-cap">${esc(cap)}</span>
+         <span class="cp-bar"><i style="width:${pct(bar)}%"></i></span></span>
+       ${on?'<span class="cp-chk">✓</span>':''}
+     </button>`;
+  const avg = monthAvgPct();
+  let html = `<h3>${tr("calPickTitle")}</h3>`;
+  html += row("", "📊", tr("calAll"), tr("calAllDesc") + " · " + avg + "%", avg, !calRoutine);
+  html += state.routine.map(it => {
+    const m = monthAchieved(it), p = m.e ? Math.round(100 * m.a / m.e) : 0;
+    return row(it.id, it.icon || "•", it.name,
+      tr("calThisMonth") + " " + m.a + "/" + m.e + tr("dayUnit") + " · " + p + "%", p, calRoutine === it.id);
+  }).join("");
+  openSheet(html, () => {
+    $("sheet-body").querySelectorAll(".cal-pick-row").forEach(b =>
+      b.addEventListener("click", () => { calRoutine = b.dataset.rid || null; closeSheet(); renderCalendar(); }));
+  });
+}
+
 function renderCalendar(){
-  $("cal-mon").textContent = L === "ko"
-    ? (calY + "년 " + (calM+1) + "월")
-    : (["January","February","March","April","May","June","July","August","September","October","November","December"][calM] + " " + calY);
-  const first = new Date(calY, calM, 1);
-  const lead = first.getDay();
-  const days = new Date(calY, calM+1, 0).getDate();
+  // ── 보기 대상 선택 버튼 갱신 (전체 / 개별 루틴) ──
+  const sel = calRoutine ? state.routine.find(r => r.id === calRoutine) : null;
+  if (calRoutine && !sel) calRoutine = null;            // 삭제된 루틴이면 전체로
+  $("cal-sel-ic").textContent = sel ? (sel.icon || "•") : "📊";
+  $("cal-sel-name").textContent = sel ? sel.name : tr("calAll");
+  if (sel){ const m = monthAchieved(sel); $("cal-sel-cap").textContent = tr("calThisMonth") + " " + m.a + "/" + m.e + tr("dayUnit"); }
+  else { $("cal-sel-cap").textContent = tr("calAllDesc"); }
+  // 칸의 색: 전체=하루 종합 달성률, 개별=그 루틴 달성도
+  const cellPct = dk => sel ? Math.round(100 * itemFill(sel, getVal(dk, sel))) : dayStats(dk).pct;
+
   const tk = todayKey();
+  const days = new Date(calY, calM+1, 0).getDate();   // 통계용(이번 달 일수)
+  const MONTHS_EN = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   // 마감 할일 / 디데이 매핑
   const dueMap = {}; state.todos.forEach(t => { if (t.due && !t.done){ (dueMap[t.due] = dueMap[t.due] || []).push(t.pr); } });
   const ddMap = {}; state.ddays.forEach(d => { (ddMap[d.date] = ddMap[d.date] || []).push(d); });
 
-  let html = DOW.map((d,i) => `<div class="cal-dow ${i===0?'sun':i===6?'sat':''}">${dow(i)}</div>`).join("");
-  for (let i = 0; i < lead; i++) html += `<div class="cal-cell empty"></div>`;
-  for (let day = 1; day <= days; day++){
-    const dk = calY + "-" + pad2(calM+1) + "-" + pad2(day);
-    const future = parseKey(dk) > parseKey(tk);
-    const st = future ? { pct:0 } : dayStats(dk);
-    const t = tint(st.pct);
-    const sty = t.bg ? `style="background:${t.bg};color:${t.fg};border-color:transparent"` : "";
-    const mark = ddMap[dk] ? `<span class="cal-dd">${esc(ddMap[dk][0].icon||'📌')}</span>` : "";
-    let dots = "";
-    if (dueMap[dk]) dots += dueMap[dk].slice(0,3).map(p => `<span class="cdot" style="background:${p===2?'var(--red)':p===1?'var(--amber)':'var(--sub)'}"></span>`).join("");
-    html += `<div class="cal-cell ${dk===tk?'today':''} ${future?'future':''}" data-dk="${dk}" ${sty}>${mark}${day}
-      ${dots?`<div class="dots">${dots}</div>`:""}</div>`;
-  }
-  $("cal-grid").innerHTML = html;
-  $("cal-grid").querySelectorAll(".cal-cell[data-dk]").forEach(el => el.addEventListener("click", () => openDayDetail(el.dataset.dk)));
+  // 요일 헤더(스크롤과 무관하게 위에 고정)
+  $("cal-dow-head").innerHTML = DOW.map((d,i) => `<div class="cal-dow ${i===0?'sun':i===6?'sat':''}">${dow(i)}</div>`).join("");
 
-  // 이번 달 통계
-  let sum = 0, rec = 0, perfect = 0;
-  for (let day = 1; day <= days; day++){
-    const dk = calY + "-" + pad2(calM+1) + "-" + pad2(day);
-    if (parseKey(dk) > parseKey(tk)) continue;
-    const st = dayStats(dk); sum += st.pct;
-    if (st.pct > 0) rec++; if (st.pct >= 100) perfect++;
+  // ── 연속 스크롤 달력: (현재 달 −11개월, 단 가입 달 이후) ~ 현재 달 ──
+  const now = new Date();
+  let sY = now.getFullYear(), sM = now.getMonth() - 11;
+  while (sM < 0){ sM += 12; sY--; }
+  if (state.created){
+    const c = parseKey(state.created);
+    if (c.getFullYear() > sY || (c.getFullYear() === sY && c.getMonth() > sM)){ sY = c.getFullYear(); sM = c.getMonth(); }
   }
-  const elapsed = Math.min(days, dayDiff(tk, calY+"-"+pad2(calM+1)+"-01") + 1);
-  const avg = elapsed > 0 && (calY < new Date().getFullYear() || calM <= new Date().getMonth() || calY > new Date().getFullYear())
-    ? Math.round(sum / Math.max(1, (parseKey(calY+"-"+pad2(calM+1)+"-01") > parseKey(tk) ? days : elapsed))) : 0;
-  // 연속 달성(전체 기준, 80% 이상)
-  let streak = 0, d = tk;
-  if (dayStats(d).pct < 80) d = addDays(d, -1);
-  while (dayStats(d).pct >= 80){ streak++; d = addDays(d, -1); }
-  $("cal-stats").innerHTML = `
-    <div class="stat-box"><div class="v">${avg}%</div><div class="k">${tr("calAvg")}</div></div>
-    <div class="stat-box"><div class="v">${streak}${tr("dayUnit")}</div><div class="k">${tr("calStreak")}</div></div>
-    <div class="stat-box"><div class="v">${perfect}${tr("dayUnit")}</div><div class="k">${tr("calPerfect")}</div></div>
-    <div class="stat-box"><div class="v">${rec}${tr("dayUnit")}</div><div class="k">${tr("calRec")}</div></div>`;
+  const months = [];
+  for (let y = sY, m = sM; (y < now.getFullYear()) || (y === now.getFullYear() && m <= now.getMonth()); ){
+    const lead = new Date(y, m, 1).getDay();
+    const dim = new Date(y, m+1, 0).getDate();
+    let cells = "";
+    for (let i = 0; i < lead; i++) cells += `<div class="cal-cell empty"></div>`;
+    for (let day = 1; day <= dim; day++){
+      const dk = y + "-" + pad2(m+1) + "-" + pad2(day);
+      const future = parseKey(dk) > parseKey(tk);
+      const t = tint(future ? 0 : cellPct(dk));
+      const sty = t.bg ? `style="background:${t.bg};color:${t.fg};border-color:transparent"` : "";
+      const mark = ddMap[dk] ? `<span class="cal-dd">${esc(ddMap[dk][0].icon||'📌')}</span>` : "";
+      const dots = dueMap[dk] ? `<div class="dots">${dueMap[dk].slice(0,3).map(p => `<span class="cdot" style="background:${p===2?'var(--red)':p===1?'var(--amber)':'var(--sub)'}"></span>`).join("")}</div>` : "";
+      cells += `<div class="cal-cell ${dk===tk?'today':''} ${future?'future':''}" data-dk="${dk}" ${sty}>${mark}${day}${dots}</div>`;
+    }
+    const label = L === "ko" ? (y + "년 " + (m+1) + "월") : (MONTHS_EN[m] + " " + y);
+    months.push(`<div class="cal-month"><div class="cal-mlabel">${label}</div><div class="cal-grid">${cells}</div></div>`);
+    m++; if (m > 11){ m = 0; y++; }
+  }
+  $("cal-scroll").innerHTML = months.join("");
+  $("cal-scroll").querySelectorAll(".cal-cell[data-dk]").forEach(el => el.addEventListener("click", () => openDayDetail(el.dataset.dk)));
 
-  // 잔디 (최근 17주)
-  const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const start = new Date(today); start.setDate(start.getDate() - 118); start.setDate(start.getDate() - start.getDay());
-  const cells = [];
-  for (let dd = new Date(start); dd <= today; dd.setDate(dd.getDate()+1)){
-    const k = dateKey(dd), pct = dayStats(k).pct;
-    cells.push(`<div class="hm-cell l${grassLevel(pct)}" title="${k} · ${pct}%"></div>`);
+  // 범례 — 달력 칸과 동일한 tint 색으로
+  $("cal-legend").innerHTML = `<span>0%</span>`
+    + [12,30,50,70,92].map(p => `<i style="background:${tint(p).bg}"></i>`).join("")
+    + `<span>100%</span>`;
+
+  // ── 이번 달 통계 ──
+  if (sel){
+    // 루틴 1개 기준: 달성한 날 · 달성률 · 현재/최고 연속
+    const mp = monthAchieved(sel), achieved = mp.a, elapsed = mp.e;
+    const rate = elapsed ? Math.round(100 * achieved / elapsed) : 0;
+    let cur = 0, d = tk;
+    if (itemFill(sel, getVal(d, sel)) < 1) d = addDays(d, -1);  // 오늘 아직이면 어제부터
+    while (itemFill(sel, getVal(d, sel)) >= 1){ cur++; d = addDays(d, -1); }
+    let best = 0, run = 0;
+    for (let dd = state.created || tk; dayDiff(dd, tk) <= 0; dd = addDays(dd, 1)){
+      if (itemFill(sel, getVal(dd, sel)) >= 1){ run++; if (run > best) best = run; } else run = 0;
+    }
+    if (cur > best) best = cur;
+    $("cal-stats").innerHTML = `
+      <div class="stat-box"><div class="v">${achieved}${tr("dayUnit")}</div><div class="k">${tr("prDaysAchieved")}</div></div>
+      <div class="stat-box"><div class="v">${rate}%</div><div class="k">${tr("prRate")}</div></div>
+      <div class="stat-box"><div class="v">${cur}${tr("dayUnit")}</div><div class="k">${tr("prStreakCur")}</div></div>
+      <div class="stat-box"><div class="v">${best}${tr("dayUnit")}</div><div class="k">${tr("prStreakBest")}</div></div>`;
+  } else {
+    let sum = 0, rec = 0, perfect = 0;
+    for (let day = 1; day <= days; day++){
+      const dk = calY + "-" + pad2(calM+1) + "-" + pad2(day);
+      if (parseKey(dk) > parseKey(tk)) continue;
+      const st = dayStats(dk); sum += st.pct;
+      if (st.pct > 0) rec++; if (st.pct >= 100) perfect++;
+    }
+    const elapsed = Math.min(days, dayDiff(tk, calY+"-"+pad2(calM+1)+"-01") + 1);
+    const avg = elapsed > 0 && (calY < new Date().getFullYear() || calM <= new Date().getMonth() || calY > new Date().getFullYear())
+      ? Math.round(sum / Math.max(1, (parseKey(calY+"-"+pad2(calM+1)+"-01") > parseKey(tk) ? days : elapsed))) : 0;
+    // 연속 달성(전체 기준, 80% 이상)
+    let streak = 0, d = tk;
+    if (dayStats(d).pct < 80) d = addDays(d, -1);
+    while (dayStats(d).pct >= 80){ streak++; d = addDays(d, -1); }
+    $("cal-stats").innerHTML = `
+      <div class="stat-box"><div class="v">${avg}%</div><div class="k">${tr("calAvg")}</div></div>
+      <div class="stat-box"><div class="v">${streak}${tr("dayUnit")}</div><div class="k">${tr("calStreak")}</div></div>
+      <div class="stat-box"><div class="v">${perfect}${tr("dayUnit")}</div><div class="k">${tr("calPerfect")}</div></div>
+      <div class="stat-box"><div class="v">${rec}${tr("dayUnit")}</div><div class="k">${tr("calRec")}</div></div>`;
   }
-  $("hm-grid").innerHTML = cells.join("");
-  $("hm-grid").parentElement.scrollLeft = 9999;
+
+  // ── 오늘로 스크롤 + '오늘로' 버튼 ──
+  const scrollToToday = () => {
+    const cs = $("cal-scroll"), t = cs.querySelector(".cal-cell.today");
+    if (t) cs.scrollTop += t.getBoundingClientRect().top - cs.getBoundingClientRect().top - cs.clientHeight / 2 + t.offsetHeight / 2;
+    else cs.scrollTop = cs.scrollHeight;
+  };
+  scrollToToday();
+  $("cal-today").onclick = scrollToToday;
+  $("cal-scroll").onscroll = () => {                    // 위로 스크롤(과거)하면 '오늘로' 버튼 표시
+    const cs = $("cal-scroll");
+    $("cal-today").classList.toggle("hidden", cs.scrollHeight - cs.scrollTop - cs.clientHeight < 80);
+  };
+  $("cal-scroll").onscroll();
 }
-$("cal-prev").addEventListener("click", () => { calM--; if (calM < 0){ calM = 11; calY--; } renderCalendar(); });
-$("cal-next").addEventListener("click", () => { calM++; if (calM > 11){ calM = 0; calY++; } renderCalendar(); });
+$("cal-sel").addEventListener("click", openRoutinePicker);
 
 /* ═════════ 설정 + 루틴 편집 ═════════ */
 function setAvatar(el){
